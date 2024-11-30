@@ -1,0 +1,27 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY FF_T IS
+    PORT (
+        T : in STD_LOGIC;
+        CLK : in STD_LOGIC;
+        Q : out STD_LOGIC;
+        Q_bar : out STD_LOGIC
+    );
+END FF_T;
+
+ARCHITECTURE Behavioral OF FF_T IS
+    signal sinal_q: STD_LOGIC := '0';  -- Inicializa o sinal interno para evitar indefinições
+BEGIN
+    PROCESS(CLK)
+    BEGIN
+        IF rising_edge(CLK) THEN
+            IF (T = '1') THEN
+                sinal_q <= NOT sinal_q;
+            END IF;
+        END IF;
+    END PROCESS;
+
+    Q <= sinal_q;
+    Q_bar <= NOT sinal_q;
+END Behavioral;

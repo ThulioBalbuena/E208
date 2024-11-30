@@ -1,0 +1,49 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity tb_flip_flop_D is
+end tb_flip_flop_D;
+
+architecture test of tb_flip_flop_D is
+    signal D : STD_LOGIC := '0';
+    signal CLK : STD_LOGIC := '0';
+    signal Q : STD_LOGIC := '0';  -- Inicializa Q
+    signal Q_bar : STD_LOGIC := '1';  -- Inicializa Q_bar para evitar indefinições
+
+    component FF_D
+        Port (
+            d : in STD_LOGIC;
+            clk : in STD_LOGIC;
+            q : out STD_LOGIC;
+            q_bar : out STD_LOGIC
+        );
+    end component;
+
+begin
+    uut: FF_D port map (d => D, clk => CLK, q => Q, q_bar => Q_bar);
+
+    CLK_process: process
+    begin
+        for i in 0 to 100 loop  -- Limita a 100 ciclos de clock
+            CLK <= '0';
+            wait for 10 ns;
+            CLK <= '1';
+            wait for 10 ns;
+        end loop;
+        wait;  -- Para encerrar o processo de clock
+    end process;
+
+    stim_proc: process
+    begin
+        D <= '0';
+        wait for 20 ns;
+        D <= '1';
+        wait for 40 ns;
+        D <= '0';
+        wait for 40 ns;
+        D <= '1';
+        wait for 40 ns;
+        report "Simulation complete" severity note;
+        wait;
+    end process;
+end test;

@@ -1,0 +1,34 @@
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY FF_D IS
+    PORT (
+        d : in STD_LOGIC;
+        clk : in STD_LOGIC;
+        q : out STD_LOGIC;
+        q_bar : out STD_LOGIC
+    );
+END FF_D;
+
+ARCHITECTURE Behavioral OF FF_D IS
+    signal sinal_q: STD_LOGIC;
+BEGIN
+    PROCESS(clk)
+    BEGIN
+        sinal_q <= '0';
+
+        IF rising_edge(clk) THEN
+            IF (d = '0') THEN
+                sinal_q <= '0';
+            ELSIF (d = '1') THEN
+                sinal_q <= '1';
+            END IF;
+        ELSIF falling_edge(clk) THEN
+            sinal_q <= sinal_q;
+        END IF;
+    END PROCESS;
+
+    q <= sinal_q;
+    q_bar <= not sinal_q;
+END Behavioral;

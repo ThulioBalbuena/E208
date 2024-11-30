@@ -1,0 +1,33 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY registrador_right IS
+    PORT (
+        reset : in STD_LOGIC;
+        clk : in STD_LOGIC;
+        entrada : in STD_LOGIC;
+        Q0, Q1, Q2 : out STD_LOGIC
+    );
+END registrador_right;
+
+ARCHITECTURE Behavioral OF registrador_right IS
+    signal reg_0, reg_1, reg_2: STD_LOGIC;
+BEGIN
+    PROCESS(clk, reset)
+    BEGIN
+        IF reset = '1' THEN
+            reg_0 <= '0';
+            reg_1 <= '0';
+            reg_2 <= '0';
+        ELSIF rising_edge(clk) THEN
+            -- Deslocamento para a direita
+            reg_0 <= reg_1;
+            reg_1 <= reg_2;
+            reg_2 <= entrada;
+        END IF;
+    END PROCESS;
+
+    Q0 <= reg_0;
+    Q1 <= reg_1;
+    Q2 <= reg_2;
+END Behavioral;
